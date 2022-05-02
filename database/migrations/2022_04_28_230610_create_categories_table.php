@@ -12,8 +12,8 @@ class CreateCategoriesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->string('image');
-            
+            $table->string('thumbnail');
+            $table->foreignId('user_id');
             $table->foreignId('parent_id')->default(0);
             $table->timestamps();
         });

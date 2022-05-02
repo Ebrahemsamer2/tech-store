@@ -3,12 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
-<<<<<<< HEAD
-    //
-=======
-    
->>>>>>> 6b3151f67ebda41d698480a4ecb19875d434c874
+    public function index()
+    {
+        $products = Product::latest()->paginate(8);
+        return view('products.index', [
+            'products' => $products
+        ]);
+    }
+
+    public function show(Product $product)
+    {
+        $related_products = $product->relatedProducts();
+        return view('products.show', [
+            'product' => $product,
+            'related_products' => $related_products
+        ]);
+    }
 }

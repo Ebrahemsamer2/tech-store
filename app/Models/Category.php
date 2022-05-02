@@ -33,4 +33,9 @@ class Category extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function getImage()
+    {
+        return $this->thumbnail ? "/storage/images/categories/" . $this->thumbnail : "/storage/images/category-placeholder.png";
+    }
 }

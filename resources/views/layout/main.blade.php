@@ -6,8 +6,6 @@
         <title>@yield('title')</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <link rel="manifest" href="site.webmanifest">
 		<link rel="shortcut icon" type="image/x-icon" href="{{ asset('assets/img/favicon.ico') }}">
         <!-- Place favicon.ico in the root directory -->
 
@@ -65,52 +63,22 @@
                                 <nav id="mobile-menu">
                                     <ul>
                                         <li class="dropdown">
-                                            <a href="{{ route('home') }}">Home</a>
+                                            <a href="{{ route('home.index') }}">Home</a>
                                         </li>
-                                        <li><a class="cod__gray-color" href="shop.html">Offer Zone <span class="offer2">Hot</span></a></li>
-                                        <li><a class="cod__gray-color" href="shop.html">Trending Item</a></li>
-                                        <li><a class="cod__gray-color" href="shop.html">Gift Card <span class="offer2 new">New</span></a></li>
-
-                                        <li class="dropdown-icon">
-                                            <a href="#">Pages</a>
-                                            <ul class="submenu">
-                                                <li>
-                                                    <a href="about.html">About</a>
-                                                </li>
-                                                <li>
-                                                    <a href="blog.html">Blog</a>
-                                                </li>
-                                                <li>
-                                                    <a href="blog-sidebar.html">Blog Sidebar</a>
-                                                </li>
-                                                <li>
-                                                    <a href="blog-details.html">Blog Details</a>
-                                                </li>
-                                                <li>
-                                                    <a href="contact.html">Contact</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product-details.html">Product Details</a>
-                                                </li>
-                                                <li>
-                                                    <a href="product-details2.html">Product Details</a>
-                                                </li>
-                                                <li>
-                                                    <a href="registration.html">Register</a>
-                                                </li>
-                                                <li>
-                                                    <a href="shop-cat-three.html">Shop Category 03</a>
-                                                </li>
-                                                <li>
-                                                    <a href="shop-collection.html">Shop Category 01</a>
-                                                </li>
-                                                <li>
-                                                    <a href="shop-left-sidebar.html">Shop Left Sidebar</a>
-                                                </li>
-                                                <li>
-                                                    <a href="shop-right-sidebar.html">Shop Right Sidebar</a>
-                                                </li>
-                                            </ul>
+                                        <li>
+                                            <a class="cod__gray-color" href="{{ route('products.index') }}">Shop</a>
+                                        </li>
+                                        <li>
+                                            <a class="cod__gray-color" href="{{ route('categories.index') }}">Categories</a>
+                                        </li>
+                                        <li>
+                                            <a class="cod__gray-color" href="{{ route('about') }}">About</a>
+                                        </li>
+                                        <li>
+                                            <a class="cod__gray-color" href="{{ route('contact') }}">Contact</a>
+                                        </li>
+                                        <li>
+                                            <a class="cod__gray-color" href="{{ route('register') }}">Register</a>
                                         </li>
                                     </ul>
                                 </nav>
@@ -155,7 +123,7 @@
                                 <nav>
                                     <ul class="dept__menu--list dept__menu--list2">
                                         <li><a class="dept__menu-mlink dept__menu-mlink2 f-900 cod__gray-color" href="#">Shop By Departments</a>
-                                            <ul class="dept__menu--dropdown open">
+                                            <ul class="dept__menu--dropdown">
                                                 <li class="dropdown"><a class="dept__menu--dlink" href="#">Lamps & Lighting</a>
                                                     <ul class="sub__menu sub__dept--menu">
                                                         <li><a href="#">Desktop</a></li>
@@ -352,8 +320,38 @@
         </header>
         <!-- Header end /-->
 
-        @yield('content')
+        <!-- Main -->
+        <main class="main--wrapper">
+            @yield('content')
 
+            <!-- Subscribe -->
+            <div class="subscribe subscribe--area grenadier-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="newsletter newsletter--box d-flex justify-content-between align-items-center pos-rel">
+                                <div class="left d-flex justify-content-between align-items-center">
+                                    <div class="newsletter__title">
+                                        <span class="notification--icon"><img src="{{ asset('assets/img/icon/notification-icon.png') }}" alt="notification"></span>
+                                        <span class="notification__title--heading f-800 white-color">Subscribe for Join Us!</span>
+                                    </div>
+                                    <div class="newsletter--message d-none d-xl-block">
+                                        <p class="newsletter__message__title mb-0">.... & receive $20 coupne for first Shopping &
+                                            free delivery.</p>
+                                    </div>
+                                </div>
+                                <form class="right newsletter--form pos-rel">
+                                    <input class="newsletter--input" type="text" placeholder="Enter Your Email Address ...">
+                                    <button class="btn newsletter--button" type="button"><img src="{{ asset('assets/img/icon/plan-icon.png') }}" alt=""></button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Subscribe End -->
+        </main>
+        <!-- Main End -->
         
          <!-- Footer -->
          <footer class="footer--area black-bg footer-three footer-two">
@@ -438,7 +436,7 @@
                     <div class="row">
                         <div class="col-lg-6">
                             <div class="footer-copyright">
-                                <p class="m-0">Copyright 2020 ShopMax.com All Rights Reserved.</p>
+                                <p class="m-0">Copyright {{ date('Y') }} RealProgrammer.net All Rights Reserved.</p>
                             </div>
                         </div>
                         <div class="col-lg-6">
