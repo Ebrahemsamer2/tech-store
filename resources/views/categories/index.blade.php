@@ -30,15 +30,7 @@
         <div class="top__featured--area pt-65 pb-50">
             <div class="container">
                <div class="row mb-40">
-                   <div class="col-sm-3 col-4">
-                       <div class="cat-bar">
-                           <div class="icon">
-                               <a href="#"><i class="fas fa-bars"></i></a>
-                           </div>
-                           <span class="f-800 ">Filter</span>
-                       </div>
-                   </div>
-                   <div class="col-sm-9 col-8">
+                   <div class="col-sm-9 offset-sm-3 col-8">
                        <div class="shop-cat">
                            <div class="show-text d-none d-sm-block">
                                <span class="f-400">Showing 1–12 of 20 results</span>
@@ -75,9 +67,13 @@
                     </div>
                     @endforeach
                 </div>
-
-                {{ $categories->links() }}
-
+                <div class="row mt-20">
+                    <div class="col-sm-12">
+                        <div class="common-pagination">
+                        {{ $categories->links() }}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- shop cat area end -->

@@ -3314,7 +3314,7 @@ ul.sub__menu.sub__dept--menu li:hover ul.sub__menu.level2 {
 .shop-details-area .cart-wrapper .last a:hover {
     color: #cd3301;
 }
-.shop-details-area .cart-wrapper .last a:first-child:before {
+/* .shop-details-area .cart-wrapper .last a:first-child:before {
     position: absolute;
     content: '';
     height: 10px;
@@ -3322,7 +3322,7 @@ ul.sub__menu.sub__dept--menu li:hover ul.sub__menu.level2 {
     background: #707070;
     top: 3px;
     right: -17px;
-}
+} */
 .shop-details-area .cart-wrapper .last a:last-child {
     padding-left: 30px;
 }

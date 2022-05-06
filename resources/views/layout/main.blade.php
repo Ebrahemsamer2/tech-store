@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="{{ asset('assets/css/meanmenu.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
         <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/mystyle.css') }}">
 
         @yield('custom_styles')
     </head>
@@ -123,7 +124,7 @@
                                 <nav>
                                     <ul class="dept__menu--list dept__menu--list2">
                                         <li><a class="dept__menu-mlink dept__menu-mlink2 f-900 cod__gray-color" href="#">Shop By Departments</a>
-                                            <ul class="dept__menu--dropdown">
+                                            <ul class="dept__menu--dropdown {{ Route::currentRouteName() == 'home.index' ? 'open' : '' }}">
                                                 <li class="dropdown"><a class="dept__menu--dlink" href="#">Lamps & Lighting</a>
                                                     <ul class="sub__menu sub__dept--menu">
                                                         <li><a href="#">Desktop</a></li>
@@ -263,48 +264,72 @@
                                 <div class="cart--header__list cart--header__list2 d-none d-xl-block">
                                     <ul class="list-inline">
                                         <li><a href="#"><i class="fal fa-user-plus"></i></a></li>
-                                        <li><a href="#"><i class="fal fa-heart"></i></a></li>
-                                        <li><a class="mini__cart--link" href="#"><i class="fal fa-bags-shopping"><span
-                                                        class="cart__count">3</span></i><span class="cart__amount">$
-                                                    3550</span></a></li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fal fa-heart">
+                                                    @if(\Cart::instance('wishlist')->count())
+                                                        <span class="cart__count">{{ \Cart::instance('wishlist')->count() }}</span>
+                                                    @endif
+                                                </i>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="mini__cart--link" href="#">
+                                                <i class="fal fa-bags-shopping">
+                                                    @if(\Cart::instance('default')->count())
+                                                        <span class="cart__count">{{ \Cart::instance('default')->count() }}</span>
+                                                    @endif
+                                                </i>
+                                                <span class="cart__amount">
+                                                    ${{ getPrice( \Cart::instance('default')->subtotal() ) }}
+                                                </span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                                 <div class="mini__cart--box">
                                     <ul>
+                                        @foreach(\Cart::instance('default')->content() as $item)
                                         <li class="mb-20">
                                             <div class="cart-image">
-                                                <a href="#"><img src="{{ asset('assets/img/allproducts/cart__thumb__1.jpg') }}" alt=""></a>
+                                                <a href="#">
+                                                    <img 
+                                                    src="{{ $item->model->thumbnail?asset('storage/images/products/$item->model->thumbnail'):asset('storage/images/product-placeholder.png') }}" 
+                                                    alt="">
+                                                </a>
                                             </div>
                                             <div class="cart-text">
-                                                <a href="#" class="title f-400 cod__black-color">Pink Jacket</a>
-                                                <span class="cart-price f-400 dusty__gray-color">2 x <span class="price f-800 cod__black-color">$ 78.00</span></span>
+                                                <a 
+                                                title="{{ $item->name }}"
+                                                href="#" 
+                                                class="title f-400 cod__black-color">{{ \Str::limit($item->name, 10) }}</a>
+                                                <span class="cart-price f-400 dusty__gray-color">{{ $item->qty }} x <span class="price f-800 cod__black-color">${{ $item->model->getPrice() }}</span></span>
                                             </div>
                                             <div class="del-button">
-                                                <a href="#"><i class="icofont-close-line"></i></a>
+                                                <a 
+                                                onclick="event.preventDefault();document.querySelector('#remove_cart_item_header_{{$item->id}}').submit()"
+                                                href="#">
+                                                    <i class="icofont-close-line"></i>
+                                                </a>
+
+                                                <form id='remove_cart_item_header_{{$item->id}}' action="{{ route('cart.destroy', $item->rowId) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+
                                             </div>
                                         </li>
-                                        <li class="mb-20">
-                                            <div class="cart-image">
-                                                <a href="#"><img src="{{ asset('assets/img/allproducts/cart__thumb__2.jpg') }}" alt=""></a>
-                                            </div>
-                                            <div class="cart-text">
-                                                <a href="#" class="title f-400 cod__black-color">Silk Glows</a>
-                                                <span class="cart-price f-400 dusty__gray-color">2 x <span class="price f-800 cod__black-color">$ 78.00</span></span>
-                                            </div>
-                                            <div class="del-button">
-                                                <a href="#"><i class="icofont-close-line"></i></a>
-                                            </div>
-                                        </li>
+                                        @endforeach
                                         <li>
                                             <div class="total-text d-flex justify-content-between">
                                                 <span class="f-800 cod__black-color">Total Bag </span>
-                                                <span class="f-800 cod__black-color">$ 99.00</span>
+                                                <span class="f-800 cod__black-color">${{ getPrice(\Cart::subtotal()) }}</span>
                                             </div>
                                         </li>
                                         <li>
                                             <div class="d-flex justify-content-between">
-                                                <a href="#" class="checkout">Checkout</a>
-                                                <a href="#" class="viewcart">View Cart</a>
+                                                <a href="{{ route('checkout.index') }}" class="checkout">Checkout</a>
+                                                <a href="{{ route('cart.index') }}" class="viewcart">View Cart</a>
                                             </div>
                                         </li>
                                     </ul>
@@ -322,6 +347,8 @@
 
         <!-- Main -->
         <main class="main--wrapper">
+            
+            <x-flashmessage />
             @yield('content')
 
             <!-- Subscribe -->

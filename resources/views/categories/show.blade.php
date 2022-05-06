@@ -13,7 +13,6 @@
                     <div class="row">
                         <div class="col-lg-5 col-md-4">
                             <div class="shop-bar d-flex align-items-center">
-                                <h4 class="f-800 cod__black-color">{{ $category->name }}</h4>
                                 <nav aria-label="breadcrumb">
                                     <ol class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="{{ route('home.index') }}">Home</a></li>

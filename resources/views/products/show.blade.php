@@ -3,7 +3,7 @@
 @section('title', $product->name)
 
 @section('content')
-        
+    
     <!-- Shop-details start -->
     <section class="shop-details-area pb-80">
         <div class="container">
@@ -99,10 +99,30 @@
                                 <input value='1' min="1" type="number" name='quantity'>
                             </div>
                         </form>
-                        <a href="#" class="cart-button">Add To Cart</a>
+                        <a 
+                        onclick="event.preventDefault();document.querySelector('#add_to_cart_form').submit();"
+                        href="#" 
+                        class="cart-button">Add To Cart</a>
                         <a href="#" class="buy-button">Buy Now</a>
+
+                        <form method='POST' action='{{ route("cart.store") }}' id='add_to_cart_form'>
+                            @csrf
+                            <input name='id' type='hidden' value="{{ $product->id }}">
+                            <input name='name' type='hidden' value="{{ $product->name }}">
+                            <input name='price' type='hidden' value="{{ $product->price }}">
+                        </form>
+
                         <div class="last pt-15">
-                            <a href="#">Add To Wishlist</a>
+                            <a 
+                            onclick="event.preventDefault();document.querySelector('#saveincart_wishlist_{{$product->id}}').submit();"
+                            href="#">Add To Wishlist | </a>
+
+                            <a 
+                            onclick="event.preventDefault();document.querySelector('#saveincart_later_{{$product->id}}').submit();"
+                            href="#">Save For Later</a>
+                        
+                            <form class='mb-0' id='saveincart_wishlist_{{$product->id}}' method='POST' action="{{ route('cart.saveincart', ['wishlist', $product->id]) }}">@csrf</form>
+                            <form class='mb-0' id='saveincart_later_{{$product->id}}' method='POST' action="{{ route('cart.saveincart', ['later', $product->id]) }}">@csrf</form>
                         </div>
                     </div>
                 </div>
